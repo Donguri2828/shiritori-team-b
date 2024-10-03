@@ -43,6 +43,7 @@ function restart() {
   document.getElementById("left").textContent = "";
   document.getElementById("first").textContent = "りょ";
   document.getElementById("word").value = "";
+  starttime();
 }
 function log() {
   console.log(logs);
@@ -59,6 +60,7 @@ function ok(word) {
   changeLeft(word);
   changeFirst(word2char(word));
   logs.push(word);
+  starttime();
 }
 function changeLeft(word = "") {
   document.getElementById("left").textContent = word;
