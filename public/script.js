@@ -36,7 +36,7 @@ function updateTime() {
     "time"
   ).textContent = `${formattedMinutes}:${formattedSeconds}`;
 }
-starttime();
+// starttime();
 
 function restart() {
   logs = [];
@@ -110,3 +110,16 @@ function modalMain() {
   ];
   endLogs.innerHTML = logs.join("<br />↓<br />");
 }
+// モータル外をクリックして閉じる処理
+dialog.addEventListener("click", (e) => {
+  const dialog = document.getElementById("dialog");
+  const dialogPosition = dialog.getBoundingClientRect();
+  if (
+    e.clientX < dialogPosition.left ||
+    e.clientX > dialogPosition.right ||
+    e.clientY < dialogPosition.top ||
+    e.clientY > dialogPosition.bottom
+  ) {
+    dialog.close();
+  }
+});
