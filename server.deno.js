@@ -4,7 +4,7 @@ import { serveDir } from "https://deno.land/std@0.223.0/http/file_server.ts";
 
 // 単語のログ
 const hiraganaArray = "あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわがぎぐげござじづぜぞだぢづでどばびぶべぼぱぴぷぺぽ".split('')
-const randomHiragana = hiraganaArray[Math.floor(Math.random() * hiraganaArray.length)];
+let randomHiragana = hiraganaArray[Math.floor(Math.random() * hiraganaArray.length)];
 const wordLog = [randomHiragana];
 
 // localhostにDenoのHTTPサーバーを展開
@@ -53,6 +53,13 @@ Deno.serve(async (request) => {
         // 現在の単語を返す
         return new Response(wordLog.slice(-1)[0]);
     }
+
+  if(request.method == "DELETE" && pathname == "/reset-log") {
+    wordLog.length = 0; // 配列の中身を全削除しています
+    randomHiragana = hiraganaArray[Math.floor(Math.random() * hiraganaArray.length)];
+    wordLog.push(randomHiragana)
+    return new Response()
+  }
 
     // ./public以下のファイルを公開
     return serveDir(
