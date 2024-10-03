@@ -1,7 +1,7 @@
 let timerInterval;
 let minutes;
 let seconds;
-
+let logs = [];
 function starttime() {
   // カウントダウンを開始する前にタイマーが動いていればクリア
   clearInterval(timerInterval);
@@ -38,8 +38,15 @@ function updateTime() {
 }
 starttime();
 
-function restart() {}
-function log() {}
+function restart() {
+  logs = [];
+  document.getElementById("left").textContent = "";
+  document.getElementById("first").textContent = "りょ";
+  document.getElementById("word").value = "";
+}
+function log() {
+  console.log(logs);
+}
 function go() {
   const text1 =
     document.getElementById("first").textContent +
@@ -48,8 +55,10 @@ function go() {
   ok(text1);
 }
 function ok(word) {
+  document.getElementById("word").value = "";
   changeLeft(word);
   changeFirst(word2char(word));
+  logs.push(word);
 }
 function changeLeft(word = "") {
   document.getElementById("left").textContent = word;
