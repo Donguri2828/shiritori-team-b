@@ -6,8 +6,8 @@
   </head>
   <body>
     <header>
-      <button id="restart" onclick="restart()">↻</button>
-      <button id="log" onclick="log()">LOG</button>
+      <button class="restart" onclick="restart()">↻</button>
+      <button class="log" onclick="log()">LOG</button>
     </header>
     <main>
       <time id="time">33:33</time>
@@ -20,6 +20,12 @@
         </div>
       </div>
       <button id="go" onclick="go()">GO</button>
+      <dialog id="dialog">
+        <div id="modalHeader">
+          <button id="modalBtn" onclick="modalBtn()">×</button>
+        </div>
+        <div id="modalMain"><p id="endLogs"></p></div>
+      </dialog>
     </main>
     <script src="script.js"></script>
   </body>

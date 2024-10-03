@@ -46,7 +46,9 @@ function restart() {
   starttime();
 }
 function log() {
-  console.log(logs);
+  const dialog = document.getElementById("dialog");
+  dialog.showModal();
+  modalMain();
 }
 function go() {
   const text1 =
@@ -70,11 +72,6 @@ function changeFirst(char = "") {
 }
 function word2char() {}
 
-function endlog() {
-  const dialog = document.getElementById("dialog");
-  dialog.showModal();
-  modalMain();
-}
 function modalBtn() {
   const dialog = document.getElementById("dialog");
   dialog.close();
@@ -82,32 +79,6 @@ function modalBtn() {
 
 function modalMain() {
   const endLogs = document.getElementById("endLogs");
-  const logs = [
-    "a",
-    "bb",
-    "ccc",
-    "dddd",
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-  ];
   endLogs.innerHTML = logs.join("<br />↓<br />");
 }
 // モータル外をクリックして閉じる処理
