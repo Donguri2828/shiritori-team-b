@@ -57,8 +57,8 @@ function bartoVowel(input) {
 }
 
 const text1 = "こんにちはアイウー";
-const text1 = "こんにちはアヱウー";
+const text2 = "こんにちはアヱウー";
 
 console.log(bartoVowel(isValid(htok(test1)))); // こんにちはあいうう
-console.log(bartoVowel(isValid(htok(test1)))); // 使えない文字が含まれています
+console.log(bartoVowel(isValid(htok(test2)))); // 使えない文字が含まれています
 
