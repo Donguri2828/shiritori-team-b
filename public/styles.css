@@ -33,3 +33,14 @@ footer {
 button {
   padding: 5px 10px;
 }
+
+dialog {
+  width: 50vw;
+  height: 50vh;
+}
+#modalHeader {
+  text-align: right;
+}
+#modalBtn {
+  border-radius: 50%;
+}

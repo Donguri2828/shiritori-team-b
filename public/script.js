@@ -69,3 +69,44 @@ function changeFirst(char = "") {
   document.getElementById("first").textContent = char;
 }
 function word2char() {}
+
+function endlog() {
+  const dialog = document.getElementById("dialog");
+  dialog.showModal();
+  modalMain();
+}
+function modalBtn() {
+  const dialog = document.getElementById("dialog");
+  dialog.close();
+}
+
+function modalMain() {
+  const endLogs = document.getElementById("endLogs");
+  const logs = [
+    "a",
+    "bb",
+    "ccc",
+    "dddd",
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+  ];
+  endLogs.innerHTML = logs.join("<br />↓<br />");
+}
