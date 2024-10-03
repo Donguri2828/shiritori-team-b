@@ -9,25 +9,30 @@ const wordLog = [randomHiragana];
 
 // localhostにDenoのHTTPサーバーを展開
 Deno.serve(async (request) => {
-    // パス名を取得する
-    // http://localhost:8000/hoge に接続した場合"/hoge"が取得できる
-    const pathname = new URL(request.url).pathname;
-    console.log(`pathname: ${pathname}`);
+  // パス名を取得する
+  // http://localhost:8000/hoge に接続した場合"/hoge"が取得できる
+  const pathname = new URL(request.url).pathname;
+  console.log(`pathname: ${pathname}`);
 
-    // GET /prev-word: 直前の単語を返す
-    if (request.method === "GET" && pathname === "/prev-word") {
-        return new Response(wordLog.slice(-1)[0]);
-    }
+  // GET /prev-word: 直前の単語を返す
+  if (request.method === "GET" && pathname === "/prev-word") {
+    return new Response(wordLog.slice(-1)[0]);
+  }
 
-    // POST /next-word: 次の単語を入力する
-    if (request.method === "POST" && pathname === "/next-word") {
-        // リクエストのペイロードを取得
-        const requestJson = await request.json();
-        // JSONの中からnextWordを取得
-        const nextWord = requestJson["nextWord"];
+  // GET /word-log: 単語ログの配列を返す．
+  if(request.method == "GET" && pathname == "/word-log"){
+    return new Response(JSON.stringify(wordLog))
+  }
 
-        // nextWordが利用可能な単語か検証する
-        if (/*TODO ここに辞書参照処理を記述*/ true) {
+  // POST /next-word: 次の単語を入力する
+  if (request.method === "POST" && pathname === "/next-word") {
+    // リクエストのペイロードを取得
+    const requestJson = await request.json();
+    // JSONの中からnextWordを取得
+    const nextWord = requestJson["nextWord"];
+
+    // nextWordが利用可能な単語か検証する
+    if (/*TODO ここに辞書参照処理を記述*/ true) {
             // 同一であれば、previousWordを更新
             wordLog.push(nextWord);
         }
