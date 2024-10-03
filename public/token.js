@@ -4,7 +4,7 @@ const hiraregex = /^[\u3041-\u3094\u30FC]+$/;
 const kataregex = /[\u30A1-\u30F6]/g;
 const notRegex = /[\u3090\u3091]/; // not正規表現
 
-function isValid(input) {
+export function isValid(input) {
     if(hiraregex.test(input) && !notRegex.test(input)){
         return input;
     }else{
@@ -12,13 +12,13 @@ function isValid(input) {
     };
 }
 
-function ktoh(input) {
+export function ktoh(input) {
     return input.replace(kataregex, (match) => {
         return String.fromCharCode(match.charCodeAt(0) - 0x60);
     });
 }
 
-function bartoVowel(input) {
+export function bartoVowel(input) {
     const vowelMap = {
         'あ': 'あ', 'い': 'い', 'う': 'う', 'え': 'え', 'お': 'お',
         'か': 'あ', 'き': 'い', 'く': 'う', 'け': 'え', 'こ': 'お',
@@ -59,6 +59,6 @@ function bartoVowel(input) {
 const text1 = "こんにちはアイウー";
 const text2 = "こんにちはアヱウー";
 
-console.log(bartoVowel(isValid(htok(test1)))); // "こんにちはあいうう"
-console.log(bartoVowel(isValid(htok(test2)))); // -1
+console.log(bartoVowel(isValid(ktoh(text1)))); // "こんにちはあいうう"
+console.log(bartoVowel(isValid(ktoh(text2)))); // -1
 
