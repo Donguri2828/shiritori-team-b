@@ -8,11 +8,11 @@ function isValid(input) {
     if(hiraregex.test(input) && !notRegex.test(input)){
         return input;
     }else{
-        return "使えない文字が含まれています";
+        return -1;
     };
 }
 
-function htok(input) {
+function ktoh(input) {
     return input.replace(kataregex, (match) => {
         return String.fromCharCode(match.charCodeAt(0) - 0x60);
     });
@@ -59,6 +59,6 @@ function bartoVowel(input) {
 const text1 = "こんにちはアイウー";
 const text2 = "こんにちはアヱウー";
 
-console.log(bartoVowel(isValid(htok(test1)))); // こんにちはあいうう
-console.log(bartoVowel(isValid(htok(test2)))); // 使えない文字が含まれています
+console.log(bartoVowel(isValid(htok(test1)))); // "こんにちはあいうう"
+console.log(bartoVowel(isValid(htok(test2)))); // -1
 
