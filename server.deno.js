@@ -1,17 +1,66 @@
-import { serveDir } from "https://deno.land/std@0.224.0/http/file_server.ts";
+// deno.landに公開されているモジュールをimport
+// denoではURLを直に記載してimportできます
+import { serveDir } from "https://deno.land/std@0.223.0/http/file_server.ts";
 
-Deno.serve(async (req) => {
-  const pathname = new URL(req.url).pathname;
-  console.log(pathname);
+// 単語のログ
+const hiraganaArray = "あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわがぎぐげござじづぜぞだぢづでどばびぶべぼぱぴぷぺぽ".split('')
+const randomHiragana = hiraganaArray[Math.floor(Math.random() * hiraganaArray.length)];
+const wordLog = [randomHiragana];
 
-  if (req.method === "GET" && pathname === "/welcome-message") {
-    return new Response("jigインターンへようこそ！");
-  }
+// localhostにDenoのHTTPサーバーを展開
+Deno.serve(async (request) => {
+    // パス名を取得する
+    // http://localhost:8000/hoge に接続した場合"/hoge"が取得できる
+    const pathname = new URL(request.url).pathname;
+    console.log(`pathname: ${pathname}`);
 
-  return serveDir(req, {
-    fsRoot: "public",
-    urlRoot: "",
-    showDirListing: true,
-    enableCors: true,
-  });
+    // GET /prev-word: 直前の単語を返す
+    if (request.method === "GET" && pathname === "/shiritori") {
+        return new Response(wordLog.slice(-1)[0]);
+    }
+
+    // POST /shiritori: 次の単語を入力する
+    if (request.method === "POST" && pathname === "/shiritori") {
+        // リクエストのペイロードを取得
+        const requestJson = await request.json();
+        // JSONの中からnextWordを取得
+        const nextWord = requestJson["nextWord"];
+
+        // nextWordが利用可能な単語か検証する
+        if (/*TODO ここに辞書参照処理を記述*/ true) {
+            // 同一であれば、previousWordを更新
+            wordLog.push(nextWord);
+        }
+        // 利用不可能な場合にエラーを返す
+        else {
+            return new Response(
+                JSON.stringify({
+                    "errorMessage": "辞書に存在しない名詞です",
+                    "errorCode": "10001"
+                }),
+                {
+                    status: 400,
+                    headers: { "Content-Type": "application/json; charset=utf-8" },
+                }
+            );
+        }
+
+        // 現在の単語を返す
+        return new Response(wordLog.slice(-1)[0]);
+    }
+
+    // ./public以下のファイルを公開
+    return serveDir(
+        request,
+        {
+            /*
+            - fsRoot: 公開するフォルダを指定
+            - urlRoot: フォルダを展開するURLを指定。今回はlocalhost:8000/に直に展開する
+            - enableCors: CORSの設定を付加するか
+            */
+            fsRoot: "./public/",
+            urlRoot: "",
+            enableCors: true,
+        }
+    )
 });
