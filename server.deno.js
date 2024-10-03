@@ -2,6 +2,8 @@
 // denoではURLを直に記載してimportできます
 import { serveDir } from "https://deno.land/std@0.223.0/http/file_server.ts";
 
+import { isValid, ktoh, bartoVowel } from "./public/token.js"
+
 // 単語のログ
 const hiraganaArray = "あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわがぎぐげござじづぜぞだぢづでどばびぶべぼぱぴぷぺぽ".split('')
 let randomHiragana = hiraganaArray[Math.floor(Math.random() * hiraganaArray.length)];
@@ -32,15 +34,15 @@ Deno.serve(async (request) => {
     const nextWord = requestJson["nextWord"];
 
     // nextWordが利用可能な単語か検証する
-    if (/*TODO ここに辞書参照処理を記述*/ true) {
-            // 同一であれば、previousWordを更新
-            wordLog.push(nextWord);
+    if (isValid(nextWord) != -1) {
+            // 利用可能であれば、previousWordを更新
+            wordLog.push(isValid(ktoh(bartoVowel(nextWord))));
         }
         // 利用不可能な場合にエラーを返す
         else {
             return new Response(
                 JSON.stringify({
-                    "errorMessage": "辞書に存在しない名詞です",
+                    "errorMessage": "利用不可能な文字列が含まれています",
                     "errorCode": "10001"
                 }),
                 {
