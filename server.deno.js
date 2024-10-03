@@ -15,12 +15,12 @@ Deno.serve(async (request) => {
     console.log(`pathname: ${pathname}`);
 
     // GET /prev-word: 直前の単語を返す
-    if (request.method === "GET" && pathname === "/shiritori") {
+    if (request.method === "GET" && pathname === "/prev-word") {
         return new Response(wordLog.slice(-1)[0]);
     }
 
-    // POST /shiritori: 次の単語を入力する
-    if (request.method === "POST" && pathname === "/shiritori") {
+    // POST /next-word: 次の単語を入力する
+    if (request.method === "POST" && pathname === "/next-word") {
         // リクエストのペイロードを取得
         const requestJson = await request.json();
         // JSONの中からnextWordを取得
