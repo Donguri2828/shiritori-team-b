@@ -38,9 +38,23 @@ function updateTime() {
 }
 starttime();
 
+function restart() {}
+function log() {}
 function go() {
-  let text1 =
+  const text1 =
     document.getElementById("first").textContent +
     document.getElementById("word").value;
   console.log(text1);
+  ok(text1);
 }
+function ok(word) {
+  changeLeft(word);
+  changeFirst(word2char(word));
+}
+function changeLeft(word = "") {
+  document.getElementById("left").textContent = word;
+}
+function changeFirst(char = "") {
+  document.getElementById("first").textContent = char;
+}
+function word2char() {}
