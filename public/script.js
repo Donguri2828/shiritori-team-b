@@ -117,7 +117,7 @@ document.querySelector("#go").onclick = async(event) => {
   // id: previousWordのタグを取得
   const paragraph = document.querySelector("#left");
   // 取得したタグの中身を書き換える
-  paragraph.innerHTML = `${previousWord}`;
+  paragraph.innerHTML = `${nextWordInputText}`;
 
   // firstタグの中身を書き換える
   if (smallHiragana.includes(previousWord.slice(-1))) {
