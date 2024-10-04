@@ -46,7 +46,7 @@ Deno.serve(async (request) => {
         else {
             return new Response(
                 JSON.stringify({
-                    "errorMessage": "利用不可能な文字列が含まれています",
+                    "errorMessage": "利用不可能な文字が含まれています",
                     "errorCode": "10001",
                 }),
                 {

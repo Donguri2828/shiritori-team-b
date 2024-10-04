@@ -12,7 +12,7 @@ window.onload = async (event) => {
 let timerInterval;
 let minutes;
 let seconds;
-let logs = [];
+
 const smallHiragana = ["ぁ", "ぃ", "ぅ", "ぇ", "ぉ", "ゃ", "ゅ", "ょ", "ゎ", "っ"];
 
 function starttime() {
@@ -52,6 +52,7 @@ function updateTime() {
 // starttime();
 
 document.querySelector(".restart").onclick = async(event) => {
+  window.location.href = "./index.html"
     const response = await fetch("/reset-log", {method: "POST"});
     const previousWord = await response.text();
     const paragraph = document.querySelector("#first");
@@ -60,10 +61,13 @@ document.querySelector(".restart").onclick = async(event) => {
     left.innerHTML = "";
 }
 
-function log() {
+document.querySelector(".log").onclick = async(event) => {
+  const response = await fetch("/word-log", {method: "GET"});
+  const wordLog = await response.json();
+  console.log(wordLog);
   const dialog = document.getElementById("dialog");
   dialog.showModal();
-  modalMain();
+  modalMain(wordLog.slice(1));
 }
 
 document.querySelector("#go").onclick = async(event) => {
@@ -88,8 +92,16 @@ document.querySelector("#go").onclick = async(event) => {
   if (response.status !== 200) {
     const errorJson = await response.text();
     const errorObj = JSON.parse(errorJson);
+
     alert(errorObj["errorMessage"]);
-    return;
+    if (errorObj["errorCode"] == "10001") {
+      // 試合続行
+      return;
+    }
+    else {
+      // 試合終了
+      window.location.href = "./end.html"
+    }
   }
 
   const previousWord = await response.text();
@@ -131,7 +143,7 @@ function modalBtn() {
   dialog.close();
 }
 
-function modalMain() {
+function modalMain(logs) {
   const endLogs = document.getElementById("endLogs");
   endLogs.innerHTML = logs.join("<br />↓<br />");
 }
