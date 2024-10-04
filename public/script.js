@@ -7,6 +7,8 @@ window.onload = async (event) => {
   const paragraph = document.querySelector("#first");
   // 取得したタグの中身を書き換える
   paragraph.innerHTML = `${previousWord}`;
+  // タイマースタート
+  starttime();
 }
 
 let timerInterval;
@@ -20,19 +22,24 @@ function starttime() {
   clearInterval(timerInterval);
 
   // 初期値を 1:00 に設定
-  minutes = 0;
-  seconds = 3;
-  document.getElementById("time").textContent = "0:03";
+  minutes = 1;
+  seconds = 0;
+  document.getElementById("time").textContent = "1:00";
 
   // 1秒ごとにupdateTimeを実行
   timerInterval = setInterval(updateTime, 1000);
 }
-function updateTime() {
+async function updateTime() {
   // 秒を減らす
   if (seconds === 0) {
     if (minutes === 0) {
+      // 時間切れ
       clearInterval(timerInterval); // カウントダウン終了
-      return;
+      const response = await fetch("/time-over", {method: "POST"});
+      const errorJson = await response.text();
+      const errorObj = JSON.parse(errorJson);
+      alert(errorObj["errorMessage"]);
+      window.location.href = "./end.html";
     }
     minutes--;
     seconds = 59;
@@ -59,6 +66,7 @@ document.querySelector(".restart").onclick = async(event) => {
     paragraph.innerHTML = previousWord;
     const left = document.querySelector("#left");
     left.innerHTML = "";
+    starttime();
 }
 
 document.querySelector(".log").onclick = async(event) => {
@@ -121,6 +129,7 @@ document.querySelector("#go").onclick = async(event) => {
 
   // inputタグの中身を消去する
   nextWordInput.value = "";
+  starttime();
 }
 
 function ok(word) {
