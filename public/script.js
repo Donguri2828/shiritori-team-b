@@ -1,7 +1,20 @@
+window.onload = async (event) => {
+  // GET /shiritoriを実行
+  const response = await fetch("/prev-word", { method: "GET" });
+  // responseの中からレスポンスのテキストデータを取得
+  const previousWord = await response.text();
+  // id: previousWordのタグを取得
+  const paragraph = document.querySelector("#first");
+  // 取得したタグの中身を書き換える
+  paragraph.innerHTML = `${previousWord}`;
+}
+
 let timerInterval;
 let minutes;
 let seconds;
-let logs = [];
+
+const smallHiragana = ["ぁ", "ぃ", "ぅ", "ぇ", "ぉ", "ゃ", "ゅ", "ょ", "ゎ", "っ"];
+
 function starttime() {
   // カウントダウンを開始する前にタイマーが動いていればクリア
   clearInterval(timerInterval);
@@ -38,25 +51,78 @@ function updateTime() {
 }
 // starttime();
 
-function restart() {
-  logs = [];
-  document.getElementById("left").textContent = "";
-  document.getElementById("first").textContent = "りょ";
-  document.getElementById("word").value = "";
-  starttime();
+document.querySelector(".restart").onclick = async(event) => {
+  window.location.href = "./index.html"
+    const response = await fetch("/reset-log", {method: "POST"});
+    const previousWord = await response.text();
+    const paragraph = document.querySelector("#first");
+    paragraph.innerHTML = previousWord;
+    const left = document.querySelector("#left");
+    left.innerHTML = "";
 }
-function log() {
+
+document.querySelector(".log").onclick = async(event) => {
+  const response = await fetch("/word-log", {method: "GET"});
+  const wordLog = await response.json();
+  console.log(wordLog);
   const dialog = document.getElementById("dialog");
   dialog.showModal();
-  modalMain();
+  modalMain(wordLog.slice(1));
 }
-function go() {
-  const text1 =
-    document.getElementById("first").textContent +
-    document.getElementById("word").value;
-  console.log(text1);
-  ok(text1);
+
+document.querySelector("#go").onclick = async(event) => {
+  // wordタグを取得
+  const nextWordInput = document.querySelector("#word");
+  // firstタグを取得
+  const firstWord = document.querySelector("#first");
+  // firstとwordの中身を取得
+  const nextWordInputText = firstWord.innerHTML + nextWordInput.value;
+  // POST /shiritoriを実行
+  // 次の単語をresponseに格納
+  const response = await fetch(
+    "/next-word",
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ nextWord: nextWordInputText })
+    }
+  );
+
+  // status: 200以外が返ってきた場合にエラーを表示
+  if (response.status !== 200) {
+    const errorJson = await response.text();
+    const errorObj = JSON.parse(errorJson);
+
+    alert(errorObj["errorMessage"]);
+    if (errorObj["errorCode"] == "10001") {
+      // 試合続行
+      return;
+    }
+    else {
+      // 試合終了
+      window.location.href = "./end.html"
+    }
+  }
+
+  const previousWord = await response.text();
+
+  // id: previousWordのタグを取得
+  const paragraph = document.querySelector("#left");
+  // 取得したタグの中身を書き換える
+  paragraph.innerHTML = `${previousWord}`;
+
+  // firstタグの中身を書き換える
+  if (smallHiragana.includes(previousWord.slice(-1))) {
+      firstWord.innerHTML = previousWord.slice(-2);
+  }
+  else {
+      firstWord.innerHTML = previousWord.slice(-1);
+  }
+
+  // inputタグの中身を消去する
+  nextWordInput.value = "";
 }
+
 function ok(word) {
   document.getElementById("word").value = "";
   changeLeft(word);
@@ -77,7 +143,7 @@ function modalBtn() {
   dialog.close();
 }
 
-function modalMain() {
+function modalMain(logs) {
   const endLogs = document.getElementById("endLogs");
   endLogs.innerHTML = logs.join("<br />↓<br />");
 }
