@@ -1,11 +1,12 @@
 const kuromoji = require('kuromoji');
+
 kuromoji.builder({ dicPath: 'public/dict/' }).build((err, tokenizer) => {
     if (err) {
         console.error(err);
         return;
     }
     
-    const text = "び";
+    const text = "すゝめ";
     const tokens = tokenizer.tokenize(text);
     console.log(tokens);
     if(tokens.length > 1){
