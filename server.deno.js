@@ -2,7 +2,7 @@
 // denoではURLを直に記載してimportできます
 import { serveDir } from "https://deno.land/std@0.223.0/http/file_server.ts";
 
-import { bartoVowel, isValid, ktoh } from "./public/token.js";
+import { bartoVowel, isValid, ktoh } from "./token.js";
 
 // 単語のログ
 const hiraganaArray =
