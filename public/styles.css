@@ -55,10 +55,12 @@ button {
 
 dialog {
   width: 50vw;
-  height: 50vh;
+  height: 70vh;
 }
 #modalHeader {
   text-align: right;
+  position: fixed;
+  width: 50vw;
 }
 #modalBtn {
   border-radius: 50%;
@@ -69,4 +71,31 @@ dialog {
 }
 .log {
   font-size: min(3vw, 5vh);
+}
+
+h1 {
+  margin: 20vh 0;
+  font-size: 8vw;
+}
+
+#endRestart {
+  font-size: 5vw;
+  margin: 0 5vw;
+}
+#endLog {
+  font-size: 5vw;
+  margin: 0 5vw;
+}
+#modalBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 5vw;
+  height: 5vw;
+  padding: 1vh;
+  margin: 0;
+  font-size: 5vw;
+}
+#endLogs {
+  font-size: 3vw;
 }
