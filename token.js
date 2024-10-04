@@ -6,7 +6,7 @@ export function isValid(input) {
     if(hiraregex.test(input) && !notRegex.test(input)){
         return input;
     }else{
-        return -1;
+        return -1;//使えない文字
     };
 }
 
