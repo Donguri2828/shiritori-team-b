@@ -8,30 +8,49 @@ footer {
   text-align: center;
 }
 
+#time {
+  font-size: min(4vw, 7vh);
+}
+
 #line {
   display: flex;
   justify-content: center;
+  margin: 5vh 0;
 }
 
 #left {
   text-align: center;
+  font-size: min(3vw, 5vh);
+  width: 30vw;
 }
-#right {
-  display: inline-flex;
-}
-
-#line * {
+#center {
+  font-size: min(4vw, 7vh);
   width: 20vw;
 }
-#start {
-  width: 2.5em;
+
+#right {
+  display: inline-flex;
+  width: 30vw;
+}
+#first {
+  width: 7vw;
   text-align: left;
+  font-size: min(3vw, 5vh);
+  display: flex;
+  align-items: center;
 }
 #word {
-  width: auto;
+  width: 23vw;
+  font-size: min(3vw, 5vh);
 }
+#go {
+  font-size: min(3.5vw, 6vh);
+  margin: 5vh;
+}
+
 button {
-  padding: 5px 10px;
+  padding: 1vh 2vw;
+  margin: 4vh 1vw 8vh;
 }
 
 dialog {
@@ -43,4 +62,11 @@ dialog {
 }
 #modalBtn {
   border-radius: 50%;
+}
+
+.restart {
+  font-size: min(3vw, 5vh);
+}
+.log {
+  font-size: min(3vw, 5vh);
 }
