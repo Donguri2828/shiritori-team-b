@@ -3,6 +3,7 @@
 import { serveDir } from "https://deno.land/std@0.223.0/http/file_server.ts";
 
 import { bartoVowel, isValid, ktoh } from "./token.js";
+import { token } from "./word.js";
 
 // 単語のログ
 const hiraganaArray =
@@ -36,7 +37,7 @@ Deno.serve(async (request) => {
         // JSONの中からnextWordを取得
         const nextWord = requestJson["nextWord"];
 
-        const hiraganaNextWord = bartoVowel(isValid(ktoh(nextWord)));
+        const hiraganaNextWord = bartoVowel(isValid(ktoh(token(nextWord))));
         const oldWordLog = [...wordLog];
         // nextWordが利用可能な単語か検証する
         if (hiraganaNextWord != -1) {

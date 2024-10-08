@@ -1,12 +1,14 @@
+import { kuromoji } from "./public/src/kuromoji.js";
+
 export function token(text){
-    kuromoji.builder({ dicPath: 'public/dict/' }).build((err, tokenizer) => {
+    kuromoji.builder({ dicPath: './public/dict/' }).build((err, tokenizer) => {
         if (err) {
             console.error(err);
             return;
         }
         
         const tokens = tokenizer.tokenize(text);
-        // console.log(tokens);
+        console.log(tokens);
         if(tokens.length > 1){
             return -2;//1単語でない
         }

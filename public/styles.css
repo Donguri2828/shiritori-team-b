@@ -1,5 +1,5 @@
 body {
-  background: orange;
+  background: skyblue;
 }
 main {
   text-align: center;
@@ -75,7 +75,7 @@ dialog {
 
 h1 {
   margin: 20vh 0;
-  font-size: 8vw;
+  font-size: 5vw;
 }
 
 #endRestart {

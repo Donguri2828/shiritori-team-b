@@ -59,4 +59,3 @@ const text2 = "こんにちはアヱウー";
 
 console.log(bartoVowel(isValid(ktoh(text1)))); // "こんにちはあいうう"
 console.log(bartoVowel(isValid(ktoh(text2)))); // -2
-
