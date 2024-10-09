@@ -4,9 +4,9 @@ window.onload = async (event) => {
   // responseの中からレスポンスのテキストデータを取得
   const previousWord = await response.text();
   // id: previousWordのタグを取得
-  const paragraph = document.querySelector("#first");
+  const paragraph = document.querySelector("#word");
   // 取得したタグの中身を書き換える
-  paragraph.innerHTML = `${previousWord}`;
+  paragraph.value = `${previousWord}`;
   // タイマースタート
   starttime();
 }
@@ -62,8 +62,8 @@ document.querySelector(".restart").onclick = async(event) => {
   window.location.href = "./index.html"
     const response = await fetch("/reset-log", {method: "POST"});
     const previousWord = await response.text();
-    const paragraph = document.querySelector("#first");
-    paragraph.innerHTML = previousWord;
+    const paragraph = document.querySelector("#word");
+    paragraph.value = previousWord;
     const left = document.querySelector("#left");
     left.innerHTML = "";
     starttime();
@@ -82,9 +82,8 @@ document.querySelector("#go").onclick = async(event) => {
   // wordタグを取得
   const nextWordInput = document.querySelector("#word");
   // firstタグを取得
-  const firstWord = document.querySelector("#first");
   // firstとwordの中身を取得
-  const nextWordInputText = firstWord.innerHTML + nextWordInput.value;
+  const nextWordInputText = nextWordInput.value;
   // POST /shiritoriを実行
   // 次の単語をresponseに格納
   const response = await fetch(
@@ -113,22 +112,24 @@ document.querySelector("#go").onclick = async(event) => {
   }
 
   const previousWord = await response.text();
+  const originWord = previousWord.split(",")[0];
+  const hiraganaWord = previousWord.split(",")[1];
 
   // id: previousWordのタグを取得
   const paragraph = document.querySelector("#left");
   // 取得したタグの中身を書き換える
-  paragraph.innerHTML = `${previousWord}`;
+  paragraph.innerHTML = `${originWord}`;
 
   // firstタグの中身を書き換える
-  if (smallHiragana.includes(previousWord.slice(-1))) {
-      firstWord.innerHTML = previousWord.slice(-2);
+  if (smallHiragana.includes(hiraganaWord.slice(-1))) {
+      nextWordInput.value = hiraganaWord.slice(-2);
   }
   else {
-      firstWord.innerHTML = previousWord.slice(-1);
+      nextWordInput.value = hiraganaWord.slice(-1);
   }
 
   // inputタグの中身を消去する
-  nextWordInput.value = "";
+  // nextWordInput.value = "";
   starttime();
 }
 
@@ -143,7 +144,7 @@ function changeLeft(word = "") {
   document.getElementById("left").textContent = word;
 }
 function changeFirst(char = "") {
-  document.getElementById("first").textContent = char;
+  document.getElementById("word").value = char;
 }
 function word2char() {}
 

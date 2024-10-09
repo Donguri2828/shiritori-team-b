@@ -13,6 +13,8 @@ let randomHiragana =
     hiraganaArray[Math.floor(Math.random() * hiraganaArray.length)];
 let wordLog = [randomHiragana];
 
+const smallHiragana = ["ぁ", "ぃ", "ぅ", "ぇ", "ぉ", "ゃ", "ゅ", "ょ", "ゎ", "っ"];
+
 // localhostにDenoのHTTPサーバーを展開
 Deno.serve(async (request) => {
     // パス名を取得する
@@ -36,8 +38,8 @@ Deno.serve(async (request) => {
         const requestJson = await request.json();
         // JSONの中からnextWordを取得
         const nextWord = requestJson["nextWord"];
-
-        const hiraganaNextWord = bartoVowel(isValid(ktoh(token(nextWord))));
+        console.log(nextWord);
+        const hiraganaNextWord = bartoVowel(isValid(ktoh(await token(nextWord))));
         const oldWordLog = [...wordLog];
         // nextWordが利用可能な単語か検証する
         if (hiraganaNextWord != -1) {
@@ -88,8 +90,28 @@ Deno.serve(async (request) => {
                 },
             );
         }
-        // 現在のひらがな変換後単語を返す
-        return new Response(hiraganaNextWord);
+
+        // 頭文字が末尾と前の単語の末尾と同じであることを確認する
+        var i = (smallHiragana.includes(oldWordLog[oldWordLog.length-1].slice(-1))) ? 2 : 1;
+        console.log("aa"+oldWordLog[oldWordLog.length-1].slice(-i)+"aa");
+        console.log(hiraganaNextWord.slice(0,i));
+        if (hiraganaNextWord.slice(0,i) != oldWordLog[oldWordLog.length-1].slice(-i)){
+            return new Response(
+                JSON.stringify({
+                    "errorMessage": "単語が正しい文字から始まっていません",
+                    "errorCode": "10004",
+                }),
+                {
+                    status: 400,
+                    headers: {
+                        "Content-Type": "application/json; charset=utf-8",
+                    },
+                },
+            );
+        }
+        var neweord = [nextWord,hiraganaNextWord];
+        // 現在のひらがな変換前単語を返す
+        return new Response(neweord);
     }
 
     //時間切れであることをエラーで返す

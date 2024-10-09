@@ -32,15 +32,15 @@ footer {
   display: inline-flex;
   width: 30vw;
 }
-#first {
+/* #first {
   width: 7vw;
   text-align: left;
   font-size: min(3vw, 5vh);
   display: flex;
   align-items: center;
-}
+} */
 #word {
-  width: 23vw;
+  width: 30vw;
   font-size: min(3vw, 5vh);
 }
 #go {
