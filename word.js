@@ -11,13 +11,13 @@ export function token(text){
             const tokens = tokenizer.tokenize(text);
             console.log(tokens);
             if(tokens.length > 1){
-                return resolve(-2);//1単語でない
+                return resolve("-2");//1単語でない
             }
             if(tokens[0].pos != "名詞"){
-                return resolve(-1);//名詞でない
+                return resolve("-1");//名詞でない
             }
             if(tokens[0].word_type == "UNKNOWN"){
-                return resolve(-1);//辞書にない単語
+                return resolve("-1");//辞書にない単語
             }
             if(typeof tokens[0].reading === "undefined"){
                 console.log("undefined");
