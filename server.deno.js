@@ -93,8 +93,6 @@ Deno.serve(async (request) => {
 
         // 頭文字が末尾と前の単語の末尾と同じであることを確認する
         var i = (smallHiragana.includes(oldWordLog[oldWordLog.length-1].slice(-1))) ? 2 : 1;
-        console.log("aa"+oldWordLog[oldWordLog.length-1].slice(-i)+"aa");
-        console.log(hiraganaNextWord.slice(0,i));
         if (hiraganaNextWord.slice(0,i) != oldWordLog[oldWordLog.length-1].slice(-i)){
             return new Response(
                 JSON.stringify({

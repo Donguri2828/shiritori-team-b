@@ -72,17 +72,15 @@ document.querySelector(".restart").onclick = async(event) => {
 document.querySelector(".log").onclick = async(event) => {
   const response = await fetch("/word-log", {method: "GET"});
   const wordLog = await response.json();
-  console.log(wordLog);
+  // console.log(wordLog);
   const dialog = document.getElementById("dialog");
   dialog.showModal();
   modalMain(wordLog.slice(1));
 }
 
 document.querySelector("#go").onclick = async(event) => {
-  // wordタグを取得
+  // wordタグと中身を取得
   const nextWordInput = document.querySelector("#word");
-  // firstタグを取得
-  // firstとwordの中身を取得
   const nextWordInputText = nextWordInput.value;
   // POST /shiritoriを実行
   // 次の単語をresponseに格納

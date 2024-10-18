@@ -20,11 +20,10 @@ export function token(text){
                 return resolve(-1);//辞書にない単語
             }
             if(typeof tokens[0].reading === "undefined"){
-                console.log("b");
+                console.log("undefined");
                 return resolve(text);
             }else{
                 console.log("a");
-                console.log(tokens[0].reading);
                 return resolve(tokens[0].reading);
             }
         });
