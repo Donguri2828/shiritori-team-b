@@ -6,12 +6,12 @@ export function isValid(input) {
     if(hiraregex.test(input) && !notRegex.test(input)){
         return input;
     }else{
-        return -1;//使えない文字
+        return "-1";//使えない文字,単語,文章
     };
 }
 
 export function ktoh(input) {
-    return input.replace(kataregex, (match) => {
+    return String(input).replace(kataregex, (match) => {
         return String.fromCharCode(match.charCodeAt(0) - 0x60);
     });
 }

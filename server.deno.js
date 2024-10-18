@@ -41,15 +41,11 @@ Deno.serve(async (request) => {
         console.log(nextWord);
         const hiraganaNextWord = bartoVowel(isValid(ktoh(await token(nextWord))));
         const oldWordLog = [...wordLog];
-        // nextWordが利用可能な単語か検証する
-        if (hiraganaNextWord != -1) {
-            // 利用可能であれば、previousWordを更新
-            wordLog.push(hiraganaNextWord);
-        } // 利用不可能な場合にエラーを返す
-        else {
+        if (hiraganaNextWord == -1) {// nextWordが利用可能な単語か検証
+            // 利用不可能な場合にエラーを返す
             return new Response(
                 JSON.stringify({
-                    "errorMessage": "利用不可能な文字が含まれています",
+                    "errorMessage": "利用不可能な文字,単語が含まれています",
                     "errorCode": "10001",
                 }),
                 {
@@ -59,6 +55,10 @@ Deno.serve(async (request) => {
                     },
                 },
             );
+        }
+        else {
+            // 利用可能であれば、previousWordを更新
+            wordLog.push(hiraganaNextWord);
         }
         // nextWordの末尾が「ん」でないことを検証する
         if (hiraganaNextWord.slice(-1) == "ん") {
